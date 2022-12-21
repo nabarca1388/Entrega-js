@@ -14,6 +14,7 @@ function interesFCI(dinero, interes){
     return ((interes * dinero) / 100) + dinero
 }
 
+
 //ACCIONES---------------------------------------------------------------------------------------------
 
 class Accion{
@@ -123,7 +124,11 @@ for(let i = 0; i < valor; i++){
 console.log(`TUS ACTIVOS SON: `, miBilletera);
 
 
+//Revisar MUY MAL
+let ordenar = prompt("Desea ordenar su billetera?");
 
-
-
-
+if (ordenar === "si") {
+    alert(miBilletera.sort((a,b) => a - b));
+}else{
+    alert(miBilletera.sort((a,b) => a + b));
+}
