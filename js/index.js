@@ -1,134 +1,58 @@
-function resta(valorCompra, valorMercado){
-    return valorMercado - valorCompra;
-}
-
-function variacionDiaria(apertura, cierre){
-    return (apertura - cierre)/10
-}
-
-function precioCompra(apertura, cierre){
-    return (apertura + cierre)/2
-}
-
-function interesFCI(dinero, interes){
-    return ((interes * dinero) / 100) + dinero
-}
-
-
-//ACCIONES---------------------------------------------------------------------------------------------
-
-class Accion{
-    constructor(nombre, prApertura, prCierre, prCompra, variacion){
-        this.nombre = nombre;
-        this.prApertura = prApertura;
-        this.prCierre = prCierre;
-        this.prCompra = prCompra;
-        this.variacion = variacion;
-    }
-}
-
-//BONOS--------------------------------------------------------------------------------------------------
-class PlazoFijo{
-    constructor(cantidad, dias, interes){
-        this.cantidad = cantidad;
-        this.dias = dias;
-        this.interes = interes;
-    }
-}
-
-//BILLETERA----------------------------------------------------------------------
-class Billetera{
-    constructor(activo, prCompra, prDia, ganancia){
-        this.activo = activo;
-        this.prCompra = prCompra;
-        this.prDia = prDia;
-        this.ganancia = ganancia;
-    }
-}
-
-
-//Creo objetos de acciones en array
-const accionesMercado = [];
-accionesMercado.push(new Accion(
-    "ggal",
-     980, 
-     1000,  
-))
-accionesMercado.push(new Accion(
-    "tesla",
-     2300, 
-     2240,  
-))
-
-
-accionesMercado.forEach(item =>{
-    item.variacion = variacionDiaria(item.prApertura, item.prCierre);
-    item.prCompra = precioCompra(item.prApertura, item.prCierre);
-})
-
+// Insert a cell at the end of the row
 /*
-accionesMercado.forEach(item =>{
-    console.log(`Nombre: ${item.nombre}`);
-    console.log(`Precio apertura: $${item.prApertura}`);
-    console.log(`Precio cierre: $${item.prCierre}`);
-    console.log(`Precio compra: $${item.prCompra}`);
-    console.log(`Variacion: %${item.variacion}`);
-})
+for(i = 0; i < 6; i++){
+    var newCell = newRow.insertCell();
+    if(i === 0){
+        var newText = document.createTextNode(i);
+    }else{
+        
+    var newText = document.createTextNode(accionesMercado[0]);
+    }
+
+    newCell.appendChild(newText);
+}
+
 */
 
-//Creo objetos de plazo fijo
-let dineroFCI = 100000;
-
-const fci = [];
-
-fci.push(new PlazoFijo(
-    dineroFCI,
-    30,
-    4.5,
-))
-
-fci.push(new PlazoFijo(
-    dineroFCI,
-    60,
-    10.2,
-))
-
-fci.push(new PlazoFijo(
-    dineroFCI,
-    90,
-    18,
-))
-
-fci.forEach(item =>{
-    item.dineroFCI = interesFCI(item.cantidad, item.interes);
-})
 
 
-//Cargo mi billetera con objetos
-const miBilletera = [];
+//ACTUALLIZAR BILLETERA
+let btnActualizar = document.getElementById("actualizar");
+let btnLimpiar = document.getElementById("limpiar");
 
-let valor = accionesMercado.length + fci.length;
-let x = 0;
+let tableBilletera = document.getElementById("tableBilletera");
+let tbodyBilletera = tableBilletera.getElementsByTagName("tbody")[0];
 
-for(let i = 0; i < valor; i++){
-    
-    if(i < fci.length){
-        miBilletera[i] = fci[i];
-    }else{
-        miBilletera[i] = accionesMercado[x];
-        x++;
-    }
+const ejecutar = () => {
+    cargar();
+    //console.log("click en el boton", nombre);
+    alert("Billetera actualizada");
+    let billetera = JSON.parse(localStorage.getItem("miBilletera"));
+
+    billetera.forEach((item, index)  => {
+        //item["a"] = index;
+            var newRow = tbodyBilletera.insertRow();
+            Object.keys(item).forEach(key => {
+                var newCell = newRow.insertCell();
+                var value = document.createTextNode(item[key]);
+                newCell.appendChild(value);
+                });
+        })
 }
 
 
-console.log(`TUS ACTIVOS SON: `, miBilletera);
-
-
-//Revisar MUY MAL
-let ordenar = prompt("Desea ordenar su billetera?");
-
-if (ordenar === "si") {
-    alert(miBilletera.sort((a,b) => a - b));
-}else{
-    alert(miBilletera.sort((a,b) => a + b));
+const vaciar = () => {
+    tbodyBilletera.remove();
+    alert("Billetera vacia");
 }
+
+
+btnLimpiar.onclick = () => vaciar();
+btnActualizar.onclick = () => ejecutar();
+
+
+
+
+
+
+
