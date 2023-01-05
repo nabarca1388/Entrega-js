@@ -10,27 +10,15 @@ class Billetera{
 
 
 //Cargo mi billetera con objetos
+
 const miBilletera = [];
 
-let valor = accionesMercado.length + fci.length;
-let x = 0;
 
-for(let i = 0; i < valor; i++){
-    
-    if(i < fci.length){
-        miBilletera[i] = fci[i];
-    }else{
-        miBilletera[i] = accionesMercado[x];
-        x++;
+function cargarBilletera (billetera){
+
+    for(i = 0; i < billetera.length; i++){
+        miBilletera.push(billetera[i]);
     }
 }
 
-
-console.log(`TUS ACTIVOS SON: `, miBilletera);
-
-//SUBO BILLETERA A LOCALSTORAGE
-
-const cargar = () => {
-    localStorage.setItem("miBilletera", JSON.stringify(miBilletera));
-}
 

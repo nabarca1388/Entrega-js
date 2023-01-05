@@ -17,6 +17,7 @@ for(i = 0; i < 6; i++){
 
 
 //ACTUALLIZAR BILLETERA
+/*
 let btnActualizar = document.getElementById("actualizar");
 let btnLimpiar = document.getElementById("limpiar");
 
@@ -39,16 +40,50 @@ const ejecutar = () => {
                 });
         })
 }
+*/
 
-
+/*
 const vaciar = () => {
     tbodyBilletera.remove();
     alert("Billetera vacia");
 }
+*/
 
-
+/*
 btnLimpiar.onclick = () => vaciar();
 btnActualizar.onclick = () => ejecutar();
+*/
+
+
+
+function comprar() {
+    let billetera = [];
+    let activoElegido =  document.getElementById("inputComprar").value.toLowerCase();
+
+    billetera = agregarAcciones(activoElegido, billetera); 
+    billetera = agregarBonos(activoElegido, billetera); 
+    
+    cargarBilletera(billetera);
+
+
+    console.log(miBilletera.length);
+
+
+    miBilletera.forEach((item)  => {
+            Object.keys(item).forEach(key => {
+                console.log(item[key]);
+                });
+
+         })
+
+}
+
+let btnComprarAccion = document.getElementById("btnComprar");
+btnComprarAccion.onclick = () => comprar(); 
+
+
+
+
 
 
 

@@ -39,18 +39,8 @@ accionesMercado.forEach(item =>{
     item.prCompra = precioCompra(item.prApertura, item.prCierre);
 })
 
-
-
-
-/*
-accionesMercado.forEach(item =>{
-    console.log(`Nombre: ${item.nombre}`);
-    console.log(`Precio apertura: $${item.prApertura}`);
-    console.log(`Precio cierre: $${item.prCierre}`);
-    console.log(`Precio compra: $${item.prCompra}`);
-    console.log(`Variacion: %${item.variacion}`);
-})
-*/
+//CARGO LAS ACCIONES A LOCALSTORAGE
+localStorage.setItem("accionesMercado", JSON.stringify(accionesMercado));
 
 
 //CARGO TABLE DE HTML ACCIONES CON EL ARRAY DE ACCIONES
@@ -58,14 +48,28 @@ let tableAcciones = document.getElementById("tableAcciones");
 let tbody = tableAcciones.getElementsByTagName("tbody")[0];
 
 accionesMercado.forEach((item, index)  => {
-//item["a"] = index;
+//item["a"] = index;    
     var newRow = tbody.insertRow();
     Object.keys(item).forEach(key => {
         var newCell = newRow.insertCell();
         var value = document.createTextNode(item[key]);
-        newCell.appendChild(value);
+        newCell.appendChild(value);           
         });
 })
 
 
 
+function agregarAcciones(nombre, billetera){
+    let billeteraStorage = JSON.parse(localStorage.getItem("accionesMercado"));
+
+    for(i = 0; i < billeteraStorage.length; i++){
+        if(nombre === billeteraStorage[i].nombre){
+            //console.log(`siiiii`,billeteraStorage[i].nombre);
+            billetera.push(billeteraStorage[i]);
+            //console.log(billeteraStorage);
+            //console.log(billetera);
+        }
+    }
+
+    return billetera
+}

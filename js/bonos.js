@@ -19,21 +19,21 @@ let dineroFCI = 100000;
 const fci = [];
 
 fci.push(new PlazoFijo(
-    "Plazo fijo 30",
+    "plazo fijo 30",
     dineroFCI,
     30,
     4.5,
 ))
 
 fci.push(new PlazoFijo(
-    "Plazo fijo 60",
+    "plazo fijo 60",
     dineroFCI,
     60,
     10.2,
 ))
 
 fci.push(new PlazoFijo(
-    "Plazo fijo 90",
+    "plazo fijo 90",
     dineroFCI,
     90,
     18,
@@ -42,6 +42,10 @@ fci.push(new PlazoFijo(
 fci.forEach(item =>{
     item.dineroFCI = interesFCI(item.cantidad, item.interes);
 })
+
+//CARGO LAS BONOS A LOCALSTORAGE
+localStorage.setItem("fci", JSON.stringify(fci));
+
 
 //CARGO TABLE DE HTML BONOS CON EL ARRAY DE BONOS
 let tableBono = document.getElementById("tableBono");
@@ -56,3 +60,23 @@ fci.forEach((item, index)  => {
         newCell.appendChild(value);
         });
 })
+
+
+
+function agregarBonos(nombre, billetera){
+    let billeteraStorage = JSON.parse(localStorage.getItem("fci"));
+
+    for(i = 0; i < billeteraStorage.length; i++){
+        if(nombre === billeteraStorage[i].nombre){
+            console.log(`siiiii`,billeteraStorage[i].nombre);
+            billetera.push(billeteraStorage[i]);
+            console.log(billeteraStorage);
+            console.log(billetera);
+        }
+    }
+
+    return billetera
+}
+
+
+
