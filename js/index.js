@@ -55,7 +55,7 @@ btnActualizar.onclick = () => ejecutar();
 */
 
 
-
+/*
 function comprar() {
     let billetera = [];
     let activoElegido =  document.getElementById("inputComprar").value.toLowerCase();
@@ -77,9 +77,9 @@ function comprar() {
          })
 
 }
-
-let btnComprarAccion = document.getElementById("btnComprar");
-btnComprarAccion.onclick = () => comprar(); 
+*/
+//let btnComprarAccion = document.getElementById("btnComprar");
+//btnComprarAccion.onclick = () => comprar(); 
 
 
 

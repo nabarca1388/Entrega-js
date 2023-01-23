@@ -5,43 +5,54 @@ function interesFCI(dinero, interes){
 
 //BONOS--------------------------------------------------------------------------------------------------
 class PlazoFijo{
-    constructor(nombre, cantidad, dias, interes){
+    constructor(nombre, cantidad, dias, interes, saldo){
         this.nombre = nombre;
         this.cantidad = cantidad;
         this.dias = dias;
         this.interes = interes;
+        this.saldo = saldo;
     }
 }
 
 //Creo objetos de plazo fijo
-let dineroFCI = 100000;
 
 const fci = [];
 
+datos['bonos'].forEach(bonos => {
+    fci.push(new PlazoFijo(
+        bonos.nombre,
+        bonos.cantidad,
+        bonos.dias,
+        bonos.interes,
+
+        interesFCI(bonos.cantidad, bonos.interes),
+     ));    
+})
+
+console.log(datos);
+
+/*
 fci.push(new PlazoFijo(
     "plazo fijo 30",
     dineroFCI,
     30,
     4.5,
-))
+));
 
 fci.push(new PlazoFijo(
     "plazo fijo 60",
     dineroFCI,
     60,
     10.2,
-))
+));
 
 fci.push(new PlazoFijo(
     "plazo fijo 90",
     dineroFCI,
     90,
     18,
-))
-
-fci.forEach(item =>{
-    item.dineroFCI = interesFCI(item.cantidad, item.interes);
-})
+));
+*/
 
 //CARGO LAS BONOS A LOCALSTORAGE
 localStorage.setItem("fci", JSON.stringify(fci));
@@ -62,21 +73,35 @@ fci.forEach((item, index)  => {
 })
 
 
+function agregarBonos(activoElegido, cantidad) {
+    let bonosMercadoStorage = JSON.parse(localStorage.getItem("fci"));
 
-function agregarBonos(nombre, billetera){
-    let billeteraStorage = JSON.parse(localStorage.getItem("fci"));
+    for (i = 0; i < bonosMercadoStorage.length; i++) {
+        if (activoElegido === bonosMercadoStorage[i].nombre) {
+            console.log("accion elegida", bonosMercadoStorage[i]);
+            cargarBilletera(bonosMercadoStorage[i], cantidad);
+            return;            
+        };
+    };
+    
+    Swal.fire(
+        'La accion no se encuentra en el mercado!',
+        'You clicked the button!',
+        'error'//tipo de icono
+    );
+};
 
-    for(i = 0; i < billeteraStorage.length; i++){
-        if(nombre === billeteraStorage[i].nombre){
-            console.log(`siiiii`,billeteraStorage[i].nombre);
-            billetera.push(billeteraStorage[i]);
-            console.log(billeteraStorage);
-            console.log(billetera);
-        }
-    }
 
-    return billetera
-}
+function comprarBonos() {
+    //let billetera = JSON.parse(localStorage.getItem("miBilletera")) || [];
+    let activoElegido = document.getElementById("inputComprar").value.toLowerCase();
+    let cantidadActivo = parseInt(document.getElementById("inputCantidad").value);
+  
+    agregarBonos(activoElegido, cantidadActivo);
+  
+  }
 
 
+let btnComprarBono = document.getElementById("btnComprarBono");
+btnComprarBono.onclick = () => comprarBonos(); 
 
